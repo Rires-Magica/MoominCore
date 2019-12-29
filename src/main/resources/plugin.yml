@@ -1,0 +1,4 @@
+name: MoominCore
+version: ${project.version}
+main: site.moomination.Main
+api-version: 1.15
