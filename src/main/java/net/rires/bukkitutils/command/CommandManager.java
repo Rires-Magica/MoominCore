@@ -30,6 +30,9 @@ public class CommandManager {
       }
       PluginCommand _command = getPluginCommand(command.getName(), plugin);
       _command.setExecutor(command.getExecutor());
+      if (command.getUsage() != null) {
+        _command.setUsage(command.getUsage());
+      }
       if (command.getDescription() != null) {
         _command.setDescription(command.getDescription());
       }
