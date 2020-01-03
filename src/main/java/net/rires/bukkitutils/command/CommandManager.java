@@ -30,24 +30,15 @@ public class CommandManager {
       }
       PluginCommand _command = getPluginCommand(command.getName(), plugin);
       _command.setExecutor(command.getExecutor());
-      if (command.getUsage() != null) {
+      _command.setPermission(command.getPermission());
+      _command.setPermissionMessage(command.getPermissionMessage());
+      _command.setTabCompleter(command.getTabCompleter());
+      if (command.getUsage() != null)
         _command.setUsage(command.getUsage());
-      }
-      if (command.getDescription() != null) {
+      if (command.getDescription() != null)
         _command.setDescription(command.getDescription());
-      }
-      if (!(command.getAliases() == null || command.getAliases().isEmpty())) {
+      if (command.getAliases() != null)
         _command.setAliases(command.getAliases());
-      }
-      if (command.getPermission() != null) {
-        _command.setPermission(command.getPermission());
-      }
-      if (command.getPermissionMessage() != null) {
-        _command.setPermissionMessage(command.getPermissionMessage());
-      }
-      if (command.getTabCompleter() != null) {
-        _command.setTabCompleter(command.getTabCompleter());
-      }
       commandMap.register(prefix, _command);
     }
   }
