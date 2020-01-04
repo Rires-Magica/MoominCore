@@ -49,7 +49,7 @@ public class SpawnCommand extends InjectableCommand {
   @Override
   public CommandExecutor getExecutor() {
     return (sender, command, label, args) -> {
-      Player teleportee;
+      final Player teleportee;
       if (ArrayUtils.isEmpty(args)) {
         if (!(sender instanceof Player)) {
           sender.sendMessage(ChatColor.RED + "Please specify the <Player> to teleport.");
@@ -57,15 +57,15 @@ public class SpawnCommand extends InjectableCommand {
         }
         teleportee = (Player) sender;
       } else {
-        if (!sender.isOp() && sender.hasPermission("moomination.commands.spawn.teleportother")) {
-          sender.sendMessage(Optional.ofNullable(command.getPermissionMessage())
-                  .orElseGet(() -> ChatColor.RED + "You don't have permission for use this command."));
-          return true;
-        }
         String name = String.join(" ", args);
         Player found = sender.getServer().getPlayerExact(name);
         if (found == null) {
           sender.sendMessage(ChatColor.RED + "Player " + name + " is not online or not found.");
+          return true;
+        }
+        if (!hasPermission(sender) && !Objects.equals(sender, found)) {
+          sender.sendMessage(Optional.ofNullable(command.getPermissionMessage())
+            .orElseGet(() -> ChatColor.RED + "You don't have permission for use this command."));
           return true;
         }
         teleportee = found;
@@ -78,6 +78,8 @@ public class SpawnCommand extends InjectableCommand {
 
   private static void respawn(CommandSender sender, Player teleportee) {
     sender.sendMessage(ChatColor.GOLD + "Teleporting...");
+    if (!Objects.equals(sender, teleportee))
+      teleportee.sendMessage(ChatColor.GOLD + "Teleporting by " + sender.getName() + "...");
     final Location spawn = Stream
       .of(teleportee.getBedSpawnLocation(), teleportee.getWorld().getSpawnLocation())
       .filter(Objects::nonNull)
@@ -85,6 +87,12 @@ public class SpawnCommand extends InjectableCommand {
       .orElseGet(teleportee::getLocation);
     assert spawn != null;
     teleportee.teleport(spawn, PlayerTeleportEvent.TeleportCause.COMMAND);
+  }
+
+  private static boolean hasPermission(CommandSender sender) {
+    return sender.isOp()
+      || sender.hasPermission("moomination.commands.spawn.teleportother") // Old
+      || sender.hasPermission("moomination.commands.spawn.teleportothers");
   }
 
 }
