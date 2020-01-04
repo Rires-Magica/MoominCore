@@ -3,7 +3,9 @@ package site.moomination.commands;
 import net.rires.bukkitutils.command.InjectableCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabCompleter;
 
+import java.util.Collections;
 import java.util.stream.Stream;
 
 public class MemoryCommand extends InjectableCommand {
@@ -21,6 +23,11 @@ public class MemoryCommand extends InjectableCommand {
   @Override
   public String getDescription() {
     return "Shows about current JVM heap and TPS (tick per second).";
+  }
+
+  @Override
+  public TabCompleter getTabCompleter() {
+    return (sender, command, alias, args) -> Collections.emptyList();
   }
 
   @Override

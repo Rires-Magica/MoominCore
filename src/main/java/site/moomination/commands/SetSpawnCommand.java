@@ -7,6 +7,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+
 public class SetSpawnCommand extends InjectableCommand {
 
   @Override
@@ -22,6 +24,11 @@ public class SetSpawnCommand extends InjectableCommand {
   @Override
   public String getDescription() {
     return "Sets world spawn point to specified location.";
+  }
+
+  @Override
+  public TabCompleter getTabCompleter() {
+    return (sender, command, alias, args) -> Collections.emptyList();
   }
 
   @Override
