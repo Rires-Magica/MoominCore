@@ -1,5 +1,6 @@
 package site.moomination.commands;
 
+import com.google.common.collect.ImmutableList;
 import net.rires.bukkitutils.command.InjectableCommand;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
@@ -11,6 +12,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,9 +43,12 @@ public class SpawnCommand extends InjectableCommand {
   @Override
   public TabCompleter getTabCompleter() {
     return (sender, command, alias, args) -> {
-      Server server = sender.getServer();
-      Stream<String> stream = server.getOnlinePlayers().stream()
-        .map(Player::getName);
+      if (!hasPermission(sender))
+        return ImmutableList.of(sender.getName());
+      if (args.length >= 2)
+        return Collections.emptyList();
+      Stream<String> stream = sender.getServer()
+        .getOnlinePlayers().stream().map(Player::getName);
       if (!ArrayUtils.isEmpty(args)) {
         stream = stream.filter(n -> n.startsWith(args[0]));
       }
