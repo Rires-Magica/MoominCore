@@ -40,7 +40,7 @@ public final class Main extends JavaPlugin {
     coordinates = (Map) getConfig().getConfigurationSection("coordinates").getValues(false);
     Bukkit.getLogger().info("Successfully loaded saved coordinates");
 
-    CommandManager.inject(this,
+    CommandManager.inject(this.getName(), this,
       new HereCommand(), new CoordCommand(), new SetSpawnCommand(), new MemoryCommand(),
       new TwitterCommand(), new SpawnCommand());
     Bukkit.getLogger().info("Successfully injected commands");
