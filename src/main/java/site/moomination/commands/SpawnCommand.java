@@ -34,6 +34,11 @@ public class SpawnCommand extends InjectableCommand {
   }
 
   @Override
+  public String getUsage() {
+    return "/spawn or /spawn <Player>";
+  }
+
+  @Override
   public TabCompleter getTabCompleter() {
     return (sender, command, alias, args) -> {
       Server server = sender.getServer();
