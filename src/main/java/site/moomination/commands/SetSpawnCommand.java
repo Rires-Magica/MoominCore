@@ -4,13 +4,31 @@ import net.rires.bukkitutils.command.InjectableCommand;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
 
 public class SetSpawnCommand extends InjectableCommand {
 
   @Override
   public String getName() {
     return "setspawn";
+  }
+
+  @Override
+  public String getUsage() {
+    return "/setspawn";
+  }
+
+  @Override
+  public String getDescription() {
+    return "Sets world spawn point to specified location.";
+  }
+
+  @Override
+  public TabCompleter getTabCompleter() {
+    return (sender, command, alias, args) -> Collections.emptyList();
   }
 
   @Override

@@ -3,9 +3,12 @@ package site.moomination.commands;
 import net.rires.bukkitutils.command.InjectableCommand;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import site.moomination.Coord;
 import site.moomination.Main;
+
+import java.util.Collections;
 
 public class HereCommand extends InjectableCommand {
 
@@ -15,13 +18,28 @@ public class HereCommand extends InjectableCommand {
   }
 
   @Override
+  public String getUsage() {
+    return "/here <name>";
+  }
+
+  @Override
+  public String getDescription() {
+    return "Save coordinates of your current location with label.";
+  }
+
+  @Override
+  public TabCompleter getTabCompleter() {
+    return (sender, command, alias, args) -> Collections.emptyList();
+  }
+
+  @Override
   public CommandExecutor getExecutor() {
     return (sender, command, label, args) -> {
       if (!(sender instanceof Player)) {
         return true;
       }
       if (args.length == 0) {
-        sender.sendMessage("Usage: /here <name>");
+        sender.sendMessage("Usage: " + getUsage());
         return true;
       }
       String name = args[0].toLowerCase();

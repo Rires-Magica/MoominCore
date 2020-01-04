@@ -1,10 +1,16 @@
 package site.moomination.commands;
 
+import com.google.common.collect.ImmutableList;
 import net.rires.bukkitutils.command.InjectableCommand;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import site.moomination.Main;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CoordCommand extends InjectableCommand {
 
@@ -14,13 +20,32 @@ public class CoordCommand extends InjectableCommand {
   }
 
   @Override
+  public String getDescription() {
+    return "Show or edit the list of saved coordinates by /here";
+  }
+
+  @Override
+  public String getUsage() {
+    return "/coord (list/remove)";
+  }
+
+  @Override
+  public TabCompleter getTabCompleter() {
+    return (sender, command, alias, args) -> {
+      if (args.length < 2)
+        return ImmutableList.of("list", "remove");
+      return ImmutableList.of();
+    };
+  }
+
+  @Override
   public CommandExecutor getExecutor() {
     return (sender, command, label, args) -> {
       if (!(sender instanceof Player)) {
         return true;
       }
       if (args.length == 0) {
-        sender.sendMessage("Usage: /coord (list/remove)");
+        sender.sendMessage("Usage: " + getUsage());
         return true;
       }
       switch (args[0].toLowerCase()) {
