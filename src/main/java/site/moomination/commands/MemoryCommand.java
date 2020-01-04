@@ -40,7 +40,7 @@ public class MemoryCommand extends InjectableCommand {
         "Memory Total: " + (runtime.totalMemory() / 1024 / 1024) + "MB",
         "Memory Used: " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB",
         "Memory Free: " + (runtime.freeMemory() / 1024 / 1024) + "MB",
-        "TPS (1m, 5m, 15m): " + tps[0] + ", " + tps[1] + ", " + tps[2]
+        String.format("TPS (1m, 5m, 15m): %.2f, %.2f, %.2f", tps[0], tps[1], tps[2])
       ).forEach(sender::sendMessage);
       return true;
     });
