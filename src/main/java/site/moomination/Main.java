@@ -72,7 +72,6 @@ public final class Main extends JavaPlugin {
   public void onDisable() {
     // Plugin shutdown logic
     saveCoords();
-    saveTwitterConfig();
     coordinates = null;
     instance = null;
   }
