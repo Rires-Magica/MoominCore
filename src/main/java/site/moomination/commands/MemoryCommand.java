@@ -36,10 +36,10 @@ public class MemoryCommand extends InjectableCommand {
       Runtime runtime = Runtime.getRuntime();
       double[] tps = Bukkit.getServer().getTPS();
       Stream.of(
-        "Memory Max: " + runtime.maxMemory(),
-        "Memory Total: " + runtime.totalMemory(),
-        "Memory Used: " + (runtime.totalMemory() - runtime.freeMemory()),
-        "Memory Free: " + runtime.freeMemory(),
+        "Memory Max: " + (runtime.maxMemory() / 1024 / 1024) + "MB",
+        "Memory Total: " + (runtime.totalMemory() / 1024 / 1024) + "MB",
+        "Memory Used: " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB",
+        "Memory Free: " + (runtime.freeMemory() / 1024 / 1024) + "MB",
         "TPS (1m, 5m, 15m): " + tps[0] + ", " + tps[1] + ", " + tps[2]
       ).forEach(sender::sendMessage);
       return true;
