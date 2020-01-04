@@ -1,14 +1,38 @@
 package site.moomination.commands;
 
+import com.google.common.collect.ImmutableList;
 import net.rires.bukkitutils.command.InjectableCommand;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabCompleter;
 import site.moomination.Main;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TwitterCommand extends InjectableCommand {
 
   @Override
   public String getName() {
     return "twitter";
+  }
+
+  @Override
+  public String getUsage() {
+    return "/twitter <on|off>";
+  }
+
+  @Override
+  public TabCompleter getTabCompleter() {
+    return (sender, command, alias, args) -> {
+      if (ArrayUtils.isEmpty(args)) {
+        return ImmutableList.of("on", "off");
+      }
+      if (args.length >= 2)
+        return ImmutableList.of();
+
+      return Stream.of("on", "off").filter(x -> x.startsWith(args[0])).collect(Collectors.toList());
+    };
   }
 
   @Override
