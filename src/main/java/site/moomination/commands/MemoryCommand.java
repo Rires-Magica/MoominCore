@@ -14,6 +14,16 @@ public class MemoryCommand extends InjectableCommand {
   }
 
   @Override
+  public String getUsage() {
+    return "/" + getName();
+  }
+
+  @Override
+  public String getDescription() {
+    return "Shows about current JVM heap and TPS (tick per second).";
+  }
+
+  @Override
   public CommandExecutor getExecutor() {
     return ((sender, command, label, args) -> {
       Runtime runtime = Runtime.getRuntime();
