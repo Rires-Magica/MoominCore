@@ -42,18 +42,18 @@ public class PlayerDeathListener implements Listener {
         } else {
           weaponName = WordUtils.capitalize(itemInMainHand.getType().name().replace("_", " ").toLowerCase());
         }
-        deathMessage = deathMessage + ChatColor.YELLOW + " using " + ChatColor.RED + weaponName + ChatColor.YELLOW + ".";
+        deathMessage = deathMessage + ChatColor.YELLOW + " using " + ChatColor.RED + weaponName + ChatColor.YELLOW;
       }
     }
     deathMessage = ChatColor.RED + player.getDisplayName() + ChatColor.DARK_RED + "[" + killCount + "] " + ChatColor.YELLOW + cause + deathMessage;
-    event.setDeathMessage(deathMessage);
+    event.setDeathMessage(deathMessage  + ".");
     String finalDeathMessage = deathMessage;
     location.getWorld().strikeLightningEffect(location);
     if (Main.getTwitter() == null) return;
     Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
       try {
         Main.getTwitter().updateStatus("RIP: " + ChatColor.stripColor(finalDeathMessage)
-          .replace("@", "(at)").replace("#", "(hash)").replace(".", ","));
+          .replace("@", "(at)").replace("#", "(hash)").replace(".", ",") + ".");
         Bukkit.getLogger().info("Successfully sent the death message");
       } catch (TwitterException e) {
         e.printStackTrace();
