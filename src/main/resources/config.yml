@@ -1,9 +1,9 @@
 coordinates:
 
 twitter:
-    enabled: false
-    consumerkey: ""
-    consumersecret: ""
-    accesstoken: ""
-    accesstokensecret: ""
-    deathmessage: true
+  enabled: false
+  consumerkey: ""
+  consumersecret: ""
+  accesstoken: ""
+  accesstokensecret: ""
+  deathmessage: true

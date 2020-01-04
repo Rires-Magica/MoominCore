@@ -1,7 +1,6 @@
 package site.moomination.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -44,23 +43,23 @@ public class BossDamageListener implements Listener {
       return;
     }
     HashMap<Player, Integer> damages;
-      if (victim.hasMetadata(KEY_DAMAGES)) {
-        try {
-          damages = (HashMap<Player, Integer>) victim.getMetadata(KEY_DAMAGES).get(0).value();
-        } catch (Exception ex) {
-          ex.printStackTrace();
-          return;
-        }
-        if (damages.containsKey(player)) {
-          damages.put(player, damages.get(player) + (int) Math.round(event.getFinalDamage()));
-        } else {
-          damages.put(player, (int) Math.round(event.getFinalDamage()));
-        }
-      } else {
-        damages = new HashMap<>();
-        damages.put(player, (int) Math.round(event.getFinalDamage()));
-        victim.setMetadata(KEY_DAMAGES, new FixedMetadataValue(Main.getInstance(), damages));
+    if (victim.hasMetadata(KEY_DAMAGES)) {
+      try {
+        damages = (HashMap<Player, Integer>) victim.getMetadata(KEY_DAMAGES).get(0).value();
+      } catch (Exception ex) {
+        ex.printStackTrace();
+        return;
       }
+      if (damages.containsKey(player)) {
+        damages.put(player, damages.get(player) + (int) Math.round(event.getFinalDamage()));
+      } else {
+        damages.put(player, (int) Math.round(event.getFinalDamage()));
+      }
+    } else {
+      damages = new HashMap<>();
+      damages.put(player, (int) Math.round(event.getFinalDamage()));
+      victim.setMetadata(KEY_DAMAGES, new FixedMetadataValue(Main.getInstance(), damages));
+    }
   }
 
   @EventHandler

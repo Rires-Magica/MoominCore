@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Coord implements ConfigurationSerializable {
 
-  public Coord (int x, int y, int z, String name, String playerName) {
+  public Coord(int x, int y, int z, String name, String playerName) {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -38,7 +38,7 @@ public class Coord implements ConfigurationSerializable {
     int z = (Integer) args.get("z");
     String name = args.get("name").toString();
     String playerName = args.get("playername").toString();
-    return new Coord(x, y, z, name ,playerName);
+    return new Coord(x, y, z, name, playerName);
   }
 
 }
