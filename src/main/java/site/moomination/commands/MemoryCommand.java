@@ -31,7 +31,7 @@ public class MemoryCommand extends InjectableCommand {
 
   @Override
   public String getPermission() {
-    return "moomination.command.memory";
+    return "moomination.commands.memory";
   }
 
 }
