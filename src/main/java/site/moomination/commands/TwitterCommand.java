@@ -38,8 +38,19 @@ public class TwitterCommand extends InjectableCommand {
         sender.sendMessage("Posting the death message to twitter is disabled");
         return true;
       }
+
+      switch (args[0].toLowerCase()) {
+        case "on":
+          Main.postToTwitter = true;
+          break;
+        case "off":
+          Main.postToTwitter = false;
+          break;
+        default:
+          return false;
+      }
+
       String status;
-      Main.postToTwitter = !Main.postToTwitter;
       if (Main.postToTwitter) {
         status = "on";
       } else {
