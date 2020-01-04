@@ -11,6 +11,10 @@ public abstract class InjectableCommand {
 
   public abstract CommandExecutor getExecutor();
 
+  public String getUsage() {
+    return null;
+  }
+
   public String getDescription() {
     return null;
   }
