@@ -15,13 +15,23 @@ public class HereCommand extends InjectableCommand {
   }
 
   @Override
+  public String getUsage() {
+    return "/here <name>";
+  }
+
+  @Override
+  public String getDescription() {
+    return "Save coordinates of your current location with label.";
+  }
+
+  @Override
   public CommandExecutor getExecutor() {
     return (sender, command, label, args) -> {
       if (!(sender instanceof Player)) {
         return true;
       }
       if (args.length == 0) {
-        sender.sendMessage("Usage: /here <name>");
+        sender.sendMessage("Usage: " + getUsage());
         return true;
       }
       String name = args[0].toLowerCase();
