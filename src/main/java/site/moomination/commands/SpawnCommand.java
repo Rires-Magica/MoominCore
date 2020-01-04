@@ -5,7 +5,6 @@ import net.rires.bukkitutils.command.InjectableCommand;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

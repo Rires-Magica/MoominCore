@@ -29,7 +29,7 @@ public class PlayerDeathListener implements Listener {
     if (player.getKiller() != null && cause.contains(player.getKiller().getDisplayName())) {
       int killerKillCount = player.getKiller().getStatistic(Statistic.PLAYER_KILLS);
       cause = cause.replace(player.getKiller().getDisplayName(), "").trim();
-      deathMessage = " " + ChatColor.RED + player.getKiller().getDisplayName() + ChatColor.DARK_RED +  "[" + killerKillCount + "]";
+      deathMessage = " " + ChatColor.RED + player.getKiller().getDisplayName() + ChatColor.DARK_RED + "[" + killerKillCount + "]";
       ItemStack itemInMainHand = player.getKiller().getInventory().getItemInMainHand();
       if (itemInMainHand.getType() != Material.AIR) {
         String weaponName;
@@ -46,7 +46,7 @@ public class PlayerDeathListener implements Listener {
       }
     }
     deathMessage = ChatColor.RED + player.getDisplayName() + ChatColor.DARK_RED + "[" + killCount + "] " + ChatColor.YELLOW + cause + deathMessage;
-    event.setDeathMessage(deathMessage  + ".");
+    event.setDeathMessage(deathMessage + ".");
     String finalDeathMessage = deathMessage;
     location.getWorld().strikeLightningEffect(location);
     if (Main.getTwitter() == null) return;

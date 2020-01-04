@@ -44,7 +44,8 @@ public class CommandManager {
   }
 
   private static CommandMap getCommandMap() {
-    if (!(Bukkit.getPluginManager() instanceof SimplePluginManager)) throw new IllegalStateException("PluginManager instance is not SimplePluginManager");
+    if (!(Bukkit.getPluginManager() instanceof SimplePluginManager))
+      throw new IllegalStateException("PluginManager instance is not SimplePluginManager");
     try {
       Field field = SimplePluginManager.class.getDeclaredField("commandMap");
       field.setAccessible(true);
