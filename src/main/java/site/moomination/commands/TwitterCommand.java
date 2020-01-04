@@ -39,15 +39,19 @@ public class TwitterCommand extends InjectableCommand {
         return true;
       }
 
-      switch (args[0].toLowerCase()) {
-        case "on":
-          Main.postToTwitter = true;
-          break;
-        case "off":
-          Main.postToTwitter = false;
-          break;
-        default:
-          return false;
+      if (args.length == 0) {
+        Main.postToTwitter = !Main.postToTwitter;
+      } else {
+        switch (args[0].toLowerCase()) {
+          case "on":
+            Main.postToTwitter = true;
+            break;
+          case "off":
+            Main.postToTwitter = false;
+            break;
+          default:
+            return false;
+        }
       }
 
       String status;
