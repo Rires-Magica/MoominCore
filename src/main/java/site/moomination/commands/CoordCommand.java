@@ -32,13 +32,9 @@ public class CoordCommand extends InjectableCommand {
   @Override
   public TabCompleter getTabCompleter() {
     return (sender, command, alias, args) -> {
-      if (ArrayUtils.isEmpty(args)) {
+      if (args.length < 2)
         return ImmutableList.of("list", "remove");
-      }
-      if (args.length >= 2)
-        return ImmutableList.of();
-
-      return Stream.of("list", "remove").filter(x -> x.startsWith(args[0])).collect(Collectors.toList());
+      return ImmutableList.of();
     };
   }
 

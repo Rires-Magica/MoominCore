@@ -25,13 +25,9 @@ public class TwitterCommand extends InjectableCommand {
   @Override
   public TabCompleter getTabCompleter() {
     return (sender, command, alias, args) -> {
-      if (ArrayUtils.isEmpty(args)) {
+      if (args.length < 2)
         return ImmutableList.of("on", "off");
-      }
-      if (args.length >= 2)
-        return ImmutableList.of();
-
-      return Stream.of("on", "off").filter(x -> x.startsWith(args[0])).collect(Collectors.toList());
+      return ImmutableList.of();
     };
   }
 
