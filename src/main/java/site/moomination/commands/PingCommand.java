@@ -16,6 +16,8 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,22 +27,35 @@ public class PingCommand extends InjectableCommand {
   private static final int AVERAGE = 90;
   private static final int POOR = 160;
 
-  private static Method GET_HANDLE;
-  private static Field PING;
+  private static final Lock GET_HANDLE_LOCK = new ReentrantLock(false);
+  private static final Lock PING_LOCK = new ReentrantLock(false);
+
+  private static volatile Method GET_HANDLE;
+  private static volatile Field PING;
 
   private static void initReflectiveData(Player instance) {
     if (GET_HANDLE == null) {
       try {
-        GET_HANDLE = instance.getClass().getMethod("getHandle");
+        GET_HANDLE_LOCK.lock();
+        // double-checked locking
+        if (GET_HANDLE == null)
+          GET_HANDLE = instance.getClass().getMethod("getHandle");
       } catch (NoSuchMethodException exception) {
         throw new RuntimeException(exception);
+      } finally {
+        GET_HANDLE_LOCK.unlock();
       }
     }
     if (PING == null) {
       try {
-        PING = getHandle(instance).getClass().getField("ping");
+        PING_LOCK.lock();
+        // double-checked locking
+        if (PING == null)
+          PING = getHandle(instance).getClass().getField("ping");
       } catch (NoSuchFieldException exception) {
         throw new RuntimeException(exception);
+      } finally {
+        PING_LOCK.unlock();
       }
     }
   }
