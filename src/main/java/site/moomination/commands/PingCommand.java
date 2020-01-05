@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import site.moomination.Main;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -127,8 +128,10 @@ public class PingCommand extends InjectableCommand {
         target = found;
       }
       assert target != null;
-      long ping = ping(target);
-      sender.sendMessage(ChatColor.YELLOW + target.getName() + "'s ping: " + colorize(ping) + ping);
+      sender.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+        long ping = ping(target);
+        sender.sendMessage(ChatColor.YELLOW + target.getName() + "'s ping: " + colorize(ping) + ping);
+      });
       return true;
     };
   }
