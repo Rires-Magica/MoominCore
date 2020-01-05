@@ -2,6 +2,7 @@ package site.moomination.commands;
 
 import net.rires.bukkitutils.command.InjectableCommand;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 
@@ -80,18 +81,56 @@ public class MemoryCommand extends InjectableCommand {
       long freeMemory = runtime.freeMemory();
       long usedMemory = totalMemory - freeMemory;
 
-      String totalPercentage = String.format("%.2f", (double) totalMemory / maxMemory * 100);
-      String usedPercentage = String.format("%.2f", (double) usedMemory / maxMemory * 100);
+      double totalPercentage = (double) totalMemory / maxMemory * 100;
+      double usedPercentage = (double) usedMemory / maxMemory * 100;
 
       Stream.of(
-        "Heap Limit: " + SizeUnit.toString(maxMemory),
-        "Heap Allocated: " + SizeUnit.toString(totalMemory) + " (" + totalPercentage + "%)",
-        "Heap Free: " + SizeUnit.toString(freeMemory),
-        "Heap Used: " + SizeUnit.toString(usedMemory) + " (" + usedPercentage + "%)",
-        String.format("TPS (1m, 5m, 15m): %.2f, %.2f, %.2f", tps[0], tps[1], tps[2])
+        String.format("%sHeap Limit: %s%s",
+          ChatColor.GOLD,
+          ChatColor.GREEN,
+          SizeUnit.toString(maxMemory)),
+        String.format("%sHeap Allocated: %s%s (%.2f)",
+          ChatColor.GOLD,
+          colorizePercentage(totalPercentage), SizeUnit.toString(totalMemory), totalPercentage),
+        String.format("%sHeap Free: %s%s",
+          ChatColor.GOLD,
+          colorizePercentageReversed((double) freeMemory / totalMemory * 100),
+          SizeUnit.toString(freeMemory)),
+        String.format("%sHeap Used: %s%s (%.2f)",
+          ChatColor.GOLD,
+          colorizePercentage(usedPercentage), SizeUnit.toString(usedMemory), usedPercentage),
+        String.format("%sTPS (1m, 5m, 15m): %s%.2f, %s%.2f, %s%.2f",
+          ChatColor.GOLD,
+          colorizeTPS(tps[0]), tps[0], colorizeTPS(tps[1]), tps[1], colorizeTPS(tps[2]), tps[2])
       ).forEach(sender::sendMessage);
       return true;
     });
+  }
+
+  private static ChatColor colorizePercentage(double percentage) {
+    if (Double.compare(percentage, 30) < 0) {
+      return ChatColor.GREEN;
+    }
+    if (Double.compare(percentage, 80) < 0) {
+      return ChatColor.YELLOW;
+    }
+    return ChatColor.RED;
+  }
+
+  // TODO: fix long name
+  private static ChatColor colorizePercentageReversed(double percentage) {
+    ChatColor r = colorizePercentage(percentage);
+    return r == ChatColor.GREEN ? ChatColor.RED : r == ChatColor.RED ? ChatColor.GREEN : r;
+  }
+
+  private static ChatColor colorizeTPS(double tps) {
+    if (Double.compare(tps, 18) > 0) {
+      return ChatColor.GREEN;
+    }
+    if (Double.compare(tps, 15) > 0) {
+      return ChatColor.YELLOW;
+    }
+    return ChatColor.RED;
   }
 
   @Override
