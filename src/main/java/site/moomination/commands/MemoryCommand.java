@@ -80,11 +80,12 @@ public class MemoryCommand extends InjectableCommand {
       long freeMemory = runtime.freeMemory();
       long usedMemory = totalMemory - freeMemory;
 
+      String totalPercentage = String.format("%.2f", (double) totalMemory / maxMemory * 100);
       String usedPercentage = String.format("%.2f", (double) usedMemory / maxMemory * 100);
 
       Stream.of(
         "Heap Limit: " + SizeUnit.toString(maxMemory),
-        "Heap Allocated: " + SizeUnit.toString(totalMemory),
+        "Heap Allocated: " + SizeUnit.toString(totalMemory) + " (" + totalPercentage + "%)",
         "Heap Free: " + SizeUnit.toString(freeMemory),
         "Heap Used: " + SizeUnit.toString(usedMemory) + " (" + usedPercentage + "%)",
         String.format("TPS (1m, 5m, 15m): %.2f, %.2f, %.2f", tps[0], tps[1], tps[2])
