@@ -42,7 +42,7 @@ public final class Main extends JavaPlugin {
 
     CommandManager.inject(this.getName(), this,
       new HereCommand(), new CoordCommand(), new SetSpawnCommand(), new MemoryCommand(),
-      new TwitterCommand(), new SpawnCommand());
+      new TwitterCommand(), new SpawnCommand(), new PingCommand());
     Bukkit.getLogger().info("Successfully injected commands");
 
     registerListeners(new ChatListener(), new PlayerDeathListener(), new BossDamageListener());
