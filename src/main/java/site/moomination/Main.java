@@ -50,7 +50,6 @@ public final class Main extends JavaPlugin {
 
     ConfigurationSection twitterConfig = getConfig().getConfigurationSection("twitter");
     if (twitterConfig.getBoolean("enabled")) {
-      Bukkit.getLogger().info(twitterConfig.getBoolean("enabled") + "");
       ConfigurationBuilder cb = new ConfigurationBuilder();
       cb.setOAuthConsumerKey(twitterConfig.getString("consumerkey"))
         .setOAuthConsumerSecret(twitterConfig.getString("consumersecret"))
