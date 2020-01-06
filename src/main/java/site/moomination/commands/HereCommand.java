@@ -1,6 +1,7 @@
 package site.moomination.commands;
 
 import net.rires.bukkitutils.command.InjectableCommand;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
@@ -38,12 +39,12 @@ public class HereCommand extends InjectableCommand {
       if (!(sender instanceof Player)) {
         return true;
       }
-      if (args.length == 0) {
+      if (ArrayUtils.isEmpty(args)) {
         sender.sendMessage("Usage: " + getUsage());
         return true;
       }
       String name = args[0].toLowerCase();
-      if (Main.coordinates.containsKey(name)) {
+      if (Main.getCoordinates().containsKey(name)) {
         sender.sendMessage("\"" + name + "\" already exists");
         return true;
       }
@@ -52,7 +53,7 @@ public class HereCommand extends InjectableCommand {
       int x = location.getBlockX();
       int y = location.getBlockY();
       int z = location.getBlockZ();
-      Main.coordinates.put(name, new Coord(x, y, z, name, player.getDisplayName()));
+      Main.getCoordinates().put(name, new Coord(x, y, z, name, player.getDisplayName()));
       Main.saveCoords();
       sender.sendMessage("Saved as" + name);
       return true;

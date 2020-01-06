@@ -2,13 +2,9 @@ package site.moomination.commands;
 
 import com.google.common.collect.ImmutableList;
 import net.rires.bukkitutils.command.InjectableCommand;
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 import site.moomination.Main;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TwitterCommand extends InjectableCommand {
 

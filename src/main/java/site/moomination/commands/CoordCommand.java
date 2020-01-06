@@ -9,9 +9,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import site.moomination.Main;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class CoordCommand extends InjectableCommand {
 
   @Override
@@ -44,14 +41,14 @@ public class CoordCommand extends InjectableCommand {
       if (!(sender instanceof Player)) {
         return true;
       }
-      if (args.length == 0) {
+      if (ArrayUtils.isEmpty(args)) {
         sender.sendMessage("Usage: " + getUsage());
         return true;
       }
       switch (args[0].toLowerCase()) {
         case "list":
           sender.sendMessage(ChatColor.YELLOW + "====" + ChatColor.WHITE + "Saved Coordinates" + ChatColor.YELLOW + "===========");
-          Main.coordinates.values().forEach(coord -> {
+          Main.getCoordinates().values().forEach(coord -> {
             String line = ChatColor.AQUA + "Name: " +
               ChatColor.WHITE + coord.name +
               ChatColor.AQUA + " xyz: " +
@@ -71,11 +68,11 @@ public class CoordCommand extends InjectableCommand {
             return true;
           }
           String name = args[1].toLowerCase();
-          if (!(Main.coordinates.containsKey(name))) {
+          if (!(Main.getCoordinates().containsKey(name))) {
             sender.sendMessage("\"" + name + "\" is not found");
             return true;
           }
-          Main.coordinates.remove(name);
+          Main.getCoordinates().remove(name);
           Main.saveCoords();
           sender.sendMessage("\"" + name + "\" has been removed");
           break;

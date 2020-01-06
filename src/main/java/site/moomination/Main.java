@@ -23,7 +23,7 @@ public final class Main extends JavaPlugin {
     ConfigurationSerialization.registerClass(Coord.class, "Coord");
   }
 
-  public static Map<String, Coord> coordinates;
+  private static Map<String, Coord> coordinates;
 
   private static Main instance;
 
@@ -96,6 +96,10 @@ public final class Main extends JavaPlugin {
 
   public static Twitter getTwitter() {
     return twitter;
+  }
+
+  public static Map<String, Coord> getCoordinates() {
+    return coordinates;
   }
 
 }
