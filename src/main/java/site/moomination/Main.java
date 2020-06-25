@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import site.moomination.commands.*;
 import site.moomination.listeners.BossDamageListener;
 import site.moomination.listeners.ChatListener;
+import site.moomination.listeners.MobSpawnListener;
 import site.moomination.listeners.PlayerDeathListener;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -31,6 +32,8 @@ public final class Main extends JavaPlugin {
 
   public static boolean postToTwitter;
 
+  public static boolean noPhantom;
+
   @Override
   public void onEnable() {
     // Plugin startup logic
@@ -42,10 +45,11 @@ public final class Main extends JavaPlugin {
 
     CommandManager.inject(this.getName(), this,
       new HereCommand(), new CoordCommand(), new SetSpawnCommand(), new MemoryCommand(),
-      new TwitterCommand(), new SpawnCommand(), new PingCommand());
+      new TwitterCommand(), new SpawnCommand(), new PingCommand(), new NoPhantomCommand());
     Bukkit.getLogger().info("Successfully injected commands");
 
-    registerListeners(new ChatListener(), new PlayerDeathListener(), new BossDamageListener());
+    registerListeners(new ChatListener(), new PlayerDeathListener(), new BossDamageListener(),
+      new MobSpawnListener());
     Bukkit.getLogger().info("Successfully registered listeners");
 
     ConfigurationSection twitterConfig = getConfig().getConfigurationSection("twitter");
