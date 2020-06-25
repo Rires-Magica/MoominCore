@@ -74,7 +74,7 @@ public class MemoryCommand extends InjectableCommand {
   public CommandExecutor getExecutor() {
     return ((sender, command, label, args) -> {
       Runtime runtime = Runtime.getRuntime();
-      double[] tps = Bukkit.getServer().getTPS();
+      double[] tps = {0D, 0D, 0D};
 
       long maxMemory = runtime.maxMemory();
       long totalMemory = runtime.totalMemory();
