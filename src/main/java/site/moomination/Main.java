@@ -26,6 +26,8 @@ public final class Main extends JavaPlugin {
 
   private static Map<String, Coord> coordinates;
 
+  private static Map<String, String> prefixes;
+
   private static Main instance;
 
   private static Twitter twitter;
@@ -41,11 +43,13 @@ public final class Main extends JavaPlugin {
     saveDefaultConfig();
 
     coordinates = (Map) getConfig().getConfigurationSection("coordinates").getValues(false);
+    prefixes = (Map) getConfig().getConfigurationSection("coordinates").getValues(false);
     Bukkit.getLogger().info("Successfully loaded saved coordinates");
 
     CommandManager.inject(this.getName(), this,
       new HereCommand(), new CoordCommand(), new SetSpawnCommand(), new MemoryCommand(),
-      new TwitterCommand(), new SpawnCommand(), new PingCommand(), new NoPhantomCommand());
+      new TwitterCommand(), new SpawnCommand(), new PingCommand(), new NoPhantomCommand(),
+      new FactionCommand());
     Bukkit.getLogger().info("Successfully injected commands");
 
     registerListeners(new ChatListener(), new PlayerDeathListener(), new BossDamageListener(),
@@ -74,7 +78,6 @@ public final class Main extends JavaPlugin {
   @Override
   public void onDisable() {
     // Plugin shutdown logic
-    saveCoords();
     coordinates = null;
     instance = null;
   }
@@ -88,13 +91,27 @@ public final class Main extends JavaPlugin {
     instance.saveConfig();
   }
 
+  public static void saveNoPhantomConfig() {
+    instance.getConfig().set("nophantom", noPhantom);
+    instance.saveConfig();
+  }
+
   public static void saveTwitterConfig() {
     instance.getConfig().set("twitter.deathmessage", postToTwitter);
     instance.saveConfig();
   }
 
+  public static void savePrefixes() {
+    instance.getConfig().createSection("prefixes", prefixes);
+    instance.saveConfig();
+  }
+
   public static Main getInstance() {
     return instance;
+  }
+
+  public static Map<String, String> getPrefixes() {
+    return prefixes;
   }
 
   public static Twitter getTwitter() {

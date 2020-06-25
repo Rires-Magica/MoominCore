@@ -1,5 +1,9 @@
 coordinates: {}
 
+prefixes: {}
+
+nophantom: true
+
 twitter:
   enabled: false
   consumerkey: ""

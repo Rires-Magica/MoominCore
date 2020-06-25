@@ -45,9 +45,22 @@ public class NoPhantomCommand extends InjectableCommand {
             return false;
         }
       }
+
+      String status;
+      if (Main.noPhantom) {
+        status = "on";
+      } else {
+        status = "off";
+      }
+      sender.sendMessage("NoPhantom is turned " + status);
+      Main.saveNoPhantomConfig();
       return true;
     });
   }
 
+  @Override
+  public String getPermission() {
+    return "moomination.commands.nophantom";
+  }
 
 }
